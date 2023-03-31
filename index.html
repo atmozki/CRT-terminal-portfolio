@@ -1,109 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0"
-		/>
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="style/animations.css"
-		/>
-		<link rel="stylesheet" type="text/css" href="style/style.css" />
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="style/switch.css"
-		/>
-		<link rel="icon" type="image/png" href="favicon.png" />
-		<title>TERMINAL DATABASE</title>
-		<script src="https://unpkg.com/rot-js@2.1.1/dist/rot.js"></script>
-		<svg style="display: none">
-			<style>
-				.handle {
-					cursor: grab;
-				}
-			</style>
-			<!-- SVG for the radial dial component -->
-			<defs id="sample_gfx">
-				<symbol
-					id="circle-with-dot"
-					viewBox="-6 -6 12 12"
-				>
-					<circle
-						cx="0"
-						cy="0"
-						r="5.875"
-						stroke="#2e3436"
-						fill="#babdb6"
-						stroke-width="0.25"
-					/>
-					<circle
-						class="handle"
-						cx="0"
-						cy="-3.75"
-						r="0.75"
-						stroke="none"
-						fill="#2e3436"
-					/>
-				</symbol>
-			</defs>
-		</svg>
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="style/animations.css" />
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <link rel="stylesheet" type="text/css" href="style/switch.css" />
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+    <title>> TERMINAL DATABASE</title>
+    <script src="https://unpkg.com/rot-js@2.1.1/dist/rot.js"></script>
+    <svg style="display: none">
+      <style>
+        .handle {
+          cursor: grab;
+        }
+      </style>
+      <!-- SVG for the radial dial component -->
+      <defs id="sample_gfx">
+        <symbol id="circle-with-dot" viewBox="-6 -6 12 12">
+          <circle
+            cx="0"
+            cy="0"
+            r="5.875"
+            stroke="#2e3436"
+            fill="#babdb6"
+            stroke-width="0.25"
+          />
+          <circle
+            class="handle"
+            cx="0"
+            cy="-3.75"
+            r="0.75"
+            stroke="none"
+            fill="#2e3436"
+          />
+        </symbol>
+      </defs>
+    </svg>
+  </head>
 
-	<body class="theme-green">
-		<div id="monitor" class="off">
-			<div id="screen">
-				<div id="crt">
-					<div class="scanline"></div>
-					<div class="terminal"></div>
-				</div>
-			</div>
+  <body class="theme-green">
+    <div id="monitor" class="off">
+      <div id="screen">
+        <div id="crt">
+          <div class="scanline"></div>
+          <div class="terminal"></div>
+        </div>
+      </div>
 
-			<div id="slider">
-				<label class="switch">
-					<input type="checkbox" />
-					<span class="slider"></span>
-				</label>
-			</div>
+      <div id="slider">
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
 
-			<div id="controls">
-				<div id="themes">
-					<button
-						id="theme-red"
-						class="theme"
-					></button>
-					<button
-						id="theme-green"
-						class="theme active"
-					></button>
-					<button
-						id="theme-blue"
-						class="theme"
-					></button>
-				</div>
+      <div id="controls">
+        <div id="themes">
+          <button id="theme-red" class="theme"></button>
+          <button id="theme-green" class="theme active"></button>
+          <button id="theme-blue" class="theme"></button>
+        </div>
 
-				<div id="power">
-					<label class="rocker rocker-small">
-						<input
-							id="switch"
-							type="checkbox"
-							checked
-						/>
-						<span class="switch-left"
-							>O</span
-						>
-						<span class="switch-right"
-							>I</span
-						>
-					</label>
-				</div>
-			</div>
-		</div>
+        <div id="power">
+          <label class="rocker rocker-small">
+            <input id="switch" type="checkbox" checked />
+            <span class="switch-left">O</span>
+            <span class="switch-right">I</span>
+          </label>
+        </div>
+      </div>
+    </div>
 
-		<script src="./terminal.mjs" type="module"></script>
-	</body>
+    <script src="./terminal.mjs" type="module"></script>
+  </body>
 </html>
