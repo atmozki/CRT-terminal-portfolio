@@ -1,0 +1,159 @@
+/**
+ * Credits: 
+ * https://codepen.io/marcusconnor/pen/QJNvMa
+ */
+:root {
+	--dark: #111;
+	--switch: rgb(90, 22, 10);
+	--switch-accent: rgb(59, 14, 6);
+	--switch-on: rgb(247, 37, 0);
+	--text-on: #fff;
+	--text-off: #ddd;
+}
+
+.rocker {
+	display: inline-block;
+	position: relative;
+	/*
+  SIZE OF SWITCH
+  ==============
+  All sizes are in em - therefore
+  changing the font-size here
+  will change the size of the switch.
+  See .rocker-small below as example.
+  */
+	font-size: 2em;
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+	color: #888;
+	width: 7em;
+	height: 4rem;
+	overflow: hidden;
+	border-bottom: 0.25rem solid var(--dark);
+}
+
+.rocker-small {
+	font-size: 1rem; /* Sizes the switch */
+	margin: 0 1rem;
+}
+
+.rocker::before {
+	content: "";
+	position: absolute;
+	top: 0.5em;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: var(--switch-accent);
+	border: 0.25rem solid var(--dark);
+	border-bottom: 0;
+}
+
+.rocker input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.switch-left,
+.switch-right {
+	cursor: pointer;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 3rem;
+	width: 3rem;
+	transition: 0.2s;
+}
+
+.switch-left {
+	height: 3rem;
+	width: 3rem;
+	left: 0.8rem;
+	bottom: 0.3rem;
+	background-color: var(--switch);
+	transform: rotate(15deg) skewX(15deg);
+}
+
+.switch-right {
+	right: 0.25rem;
+	bottom: 0;
+	background-color: var(--switch-accent);
+	background-image: radial-gradient(
+		at right,
+		var(--switch-on) 0%,
+		var(--switch) 75%
+	);
+	color: #fff;
+}
+input:checked + .switch-left + .switch-right {
+	background-image: none;
+}
+.switch-left::before,
+.switch-right::before {
+	content: "";
+	position: absolute;
+	width: 0.7em;
+	height: 3rem;
+	bottom: -0.75em;
+	background-color: var(--switch-accent);
+	transform: skewY(-65deg);
+}
+
+.switch-left::before {
+	left: -0.7em;
+}
+
+.switch-right::before {
+	right: -0.7em;
+	background-color: transparent;
+	transform: skewY(65deg);
+}
+
+input:checked + .switch-left {
+	background-color: var(--switch);
+	color: #fff;
+	bottom: 0px;
+	left: 0.25em;
+	height: 3rem;
+	width: 3rem;
+	transform: rotate(0deg) skewX(0deg);
+}
+
+input:checked + .switch-left::before {
+	background-color: transparent;
+	width: 3.0833em;
+}
+
+input:checked + .switch-left + .switch-right {
+	background-color: var(--switch);
+	color: #fff;
+	bottom: 0.25rem;
+	right: 0.85rem;
+	height: 3rem;
+	width: 3rem;
+	transform: rotate(-15deg) skewX(-15deg);
+}
+
+input:checked + .switch-left + .switch-right::before {
+	background-color: rgb(44, 14, 6);
+}
+
+/* Keyboard Users */
+input:focus + .switch-left {
+	color: var(--text-off);
+}
+
+input:checked:focus + .switch-left {
+	color: var(--text-on);
+}
+
+input:focus + .switch-left + .switch-right {
+	color: var(--text-on);
+}
+
+input:checked:focus + .switch-left + .switch-right {
+	color: var(--text-off);
+}
