@@ -1,4 +1,4 @@
-// Shows my contact details
+// Shows my contacts details
 
 const output = [
   " ",

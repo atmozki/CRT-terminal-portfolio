@@ -1,3 +1,3 @@
-const output = "Good day. My Friend.";
+const output = "Good day. ADMINISTRATOR.";
 
 export { output };

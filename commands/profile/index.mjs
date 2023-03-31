@@ -12,7 +12,7 @@ const output = [
   " ",
   "Address: REDACTED, KERALA, INDIA",
   " ",
-  "This a interactive terminal based concept portfolio.",
+  "This an interactive terminal based concept portfolio.",
   " ",
 ];
 

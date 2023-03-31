@@ -2,7 +2,7 @@
 
 const output = [
   " ",
-  "This is a interactive terminal based concept portfolio.",
+  "This is an interactive terminal based concept portfolio.",
   " ",
   "This project is based on Edwin Keijl's Retro CRT terminal screen.",
   " ",

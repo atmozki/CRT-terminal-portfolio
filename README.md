@@ -14,7 +14,7 @@
 
 ## Introduction
 
-This is a interactive terminal based concept portfolio website that is inspired by the CRT terminal and Edwin Keijl's Retro CRT terminal screen 🤗. It is built using HTML, CSS, and JavaScript. The website is hosted on GitHub pages. The screenshots of the website are shown below.
+This is an interactive terminal based concept portfolio website that is inspired by the CRT terminal and Edwin Keijl's Retro CRT terminal screen 🤗. It is built using HTML, CSS, and JavaScript. The website is hosted on GitHub pages. The screenshots of the website are shown below.
 
 ## How to use
 
