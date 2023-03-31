@@ -10,514 +10,509 @@
 /*********** VARIABLES *************/
 
 :root {
-	--green-color: #5bf870;
-	--green-bg: #05321e;
-	--red-color: #c0100a;
-	--red-bg: #1b0302;
-	--blue-color: #a5a5ff;
-	--blue-bg: #4242e7;
-	--off: #050505;
-	--dark: #111;
-	--term: "> ";
+  --green-color: #5bf870;
+  --green-bg: #05321e;
+  --red-color: #c0100a;
+  --red-bg: #1b0302;
+  --blue-color: #a5a5ff;
+  --blue-bg: #4242e7;
+  --off: #050505;
+  --dark: #111;
+  --term: "> ";
 }
 
 /*********** THEMES  *************/
 /** Use --color and --bg in your CSS files to get the active text and bg colour. */
 /** One of these theme classes is applied to the <body>, so the whole document uses that theme */
 .theme-red {
-	--color: var(--red-color);
-	--bg: var(--red-bg);
-	--term: "$ ";
+  --color: var(--red-color);
+  --bg: var(--red-bg);
+  --term: "$ ";
 }
 .theme-green {
-	--color: var(--green-color);
-	--bg: var(--green-bg);
+  --color: var(--green-color);
+  --bg: var(--green-bg);
 }
 .theme-blue {
-	--color: var(--blue-color);
-	--bg: var(--blue-bg);
-	--term: "";
+  --color: var(--blue-color);
+  --bg: var(--blue-bg);
+  --term: "";
 }
 
 /** Theme specific stuff from here */
 .theme-red .char {
-	animation: type 0.5s linear 0s 1;
+  animation: type 0.5s linear 0s 1;
 }
 .theme-red #crt {
-	font-family: "Share Tech Mono", monospace;
-	font-size: max(1rem, 1.6vmin);
+  font-family: "Share Tech Mono", monospace;
+  font-size: max(1rem, 1.6vmin);
 }
 .theme-blue #crt {
-	background-image: none;
-	background-color: var(--color);
-	box-shadow: none;
-	border-radius: 1em;
-	padding: 3rem;
+  background-image: none;
+  background-color: var(--color);
+  box-shadow: none;
+  border-radius: 1em;
+  padding: 3rem;
 }
 .theme-blue #monitor:not(.off) #crt:before {
-	background: none;
-	background-color: var(--bg);
-	top: 3rem;
-	left: 3rem;
-	bottom: 3rem;
-	right: 3rem;
-	z-index: 0;
+  background: none;
+  background-color: var(--bg);
+  top: 3rem;
+  left: 3rem;
+  bottom: 3rem;
+  right: 3rem;
+  z-index: 0;
 }
 .theme-blue .scanline {
-	display: none;
+  display: none;
 }
 .theme-blue .terminal {
-	padding: 0;
+  padding: 0;
 }
 
 /*********** GENERIC STUFF *************/
 
 html {
-	font-size: 12px;
-	box-sizing: border-box;
+  font-size: 12px;
+  box-sizing: border-box;
 }
 *,
 *:before,
 *:after {
-	box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
-	background: #111;
-	margin: 0;
-	overflow: hidden;
-	font-family: sans-serif;
+  background: #111;
+  margin: 0;
+  overflow: hidden;
+  font-family: sans-serif;
 }
 
 a {
-	outline: none;
+  outline: none;
 }
 /*********** INPUT / OUTPUT *************/
 
 #prompt {
-	display: none;
+  display: none;
 }
 [contenteditable] {
-	caret-color: transparent; /** This hides the default browser caret */
-	outline: none;
+  caret-color: transparent; /** This hides the default browser caret */
+  outline: none;
 }
 #input {
-	position: relative;
-	display: block;
-	white-space: pre-wrap;
+  position: relative;
+  display: block;
+  white-space: pre-wrap;
 }
 /* Inserts the > before terminal input */
 #input:before {
-	content: var(--term);
+  content: var(--term);
 }
 /* Puts a blinking square after the content as replacement for caret */
 #input[contenteditable="true"]:after,
 .typer.active:after {
-	content: "■";
-	animation: cursor 1s infinite;
-	animation-timing-function: step-end;
-	margin-left: 1px;
-	line-height: 1rem;
+  content: "■";
+  animation: cursor 1s infinite;
+  animation-timing-function: step-end;
+  margin-left: 1px;
+  line-height: 1rem;
 }
 
 #input.password .char {
-	display: none;
+  display: none;
 }
 #input.password:after {
-	color: var(--color);
+  color: var(--color);
 }
 #input.password:before {
-	color: var(--color);
-	content: var(--term) attr(data-pw);
+  color: var(--color);
+  content: var(--term) attr(data-pw);
 }
 
 .typer {
-	word-break: break-all;
+  word-break: break-all;
 }
 
 /*********** PARTS OF THE SCREEN *************/
 
 #monitor {
-	margin: 3vmin auto;
-	padding: 5.5vmin;
-	width: min-content;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background: #3f3933;
-	border-radius: 0.5rem;
+  margin: 3vmin auto;
+  padding: 5.5vmin;
+  width: min-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #3f3933;
+  border-radius: 0.5rem;
 }
 #monitor:not(.off) {
-	box-shadow: 0.6px 90px 110px -60px var(--bg); /* screen glow */
+  box-shadow: 0.6px 90px 110px -60px var(--bg); /* screen glow */
 }
 #screen {
-	position: relative;
-	border: 30px solid transparent;
-	border-image-source: url(/img/bezel_gray.png);
-	border-image-slice: 30 fill;
-	border-image-outset: 0;
-	overflow: hidden;
+  position: relative;
+  border: 30px solid transparent;
+  border-image-source: url(../img/bezel_gray.png);
+  border-image-slice: 30 fill;
+  border-image-outset: 0;
+  overflow: hidden;
 }
 /* The screen itself + border */
 #crt,
 pre {
-	font-family: "VT323", monospace;
+  font-family: "VT323", monospace;
 }
 #crt {
-	min-width: 80ch; /* This makes 80 monospace characters fit on the screen */
-	height: calc(80ch * 0.8);
-	font-size: max(
-		1rem,
-		2.2vmin
-	); /* Scale the font-size relative to the minimum screen dimension */
-	position: relative;
-	background: var(--bg);
-	background-image: radial-gradient(
-		ellipse,
-		var(--bg) 0%,
-		var(--off) 90%
-	);
-	animation: on 2s linear;
-	transition: all 0.5s;
-	overflow: hidden;
+  min-width: 80ch; /* This makes 80 monospace characters fit on the screen */
+  height: calc(80ch * 0.8);
+  font-size: max(
+    1rem,
+    2.2vmin
+  ); /* Scale the font-size relative to the minimum screen dimension */
+  position: relative;
+  background: var(--bg);
+  background-image: radial-gradient(ellipse, var(--bg) 0%, var(--off) 90%);
+  animation: on 2s linear;
+  transition: all 0.5s;
+  overflow: hidden;
 }
 
 #crt:after {
-	content: " ";
-	opacity: 0;
-	background: #fff;
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	width: 100%;
-	height: 100%;
-	pointer-events: none;
-	z-index: 3;
+  content: " ";
+  opacity: 0;
+  background: #fff;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
 }
 #monitor.turn-off #crt:after {
-	animation: turnOff 0.4s ease-in-out;
-	/* animation-fill-mode: forwards; */
+  animation: turnOff 0.4s ease-in-out;
+  /* animation-fill-mode: forwards; */
 }
 
 #monitor:not(.off) #crt:before {
-	content: " ";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	background: linear-gradient(
-		to bottom,
-		rgba(18, 16, 16, 0.1) 50%,
-		rgba(0, 0, 0, 0.25) 50%
-	);
-	background-size: 100% 8px;
-	z-index: 2;
-	pointer-events: none;
-	animation: fadeIn 2s;
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 16, 16, 0.1) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 8px;
+  z-index: 2;
+  pointer-events: none;
+  animation: fadeIn 2s;
 }
 
 /* Screen turned off */
 #monitor.off #crt {
-	background: var(--off);
+  background: var(--off);
 }
 #monitor.off #crt:before {
-	background: none;
+  background: none;
 }
 #monitor.off #crt * {
-	display: none !important;
+  display: none !important;
 }
 
 body.fullscreen #crt {
-	font-size: 2.5rem;
-	position: fixed;
-	width: 100%;
-	left: 0;
-	top: 0;
-	z-index: 999;
+  font-size: 2.5rem;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 999;
 }
 
 .fullscreen {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .terminal {
-	position: relative;
-	height: 100%;
-	padding: 2rem;
-	overflow-y: auto;
-	overflow-x: hidden;
-	word-break: break-word;
-	text-transform: uppercase;
-	animation: textShadow 4s infinite;
+  position: relative;
+  height: 100%;
+  padding: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  word-break: break-word;
+  text-transform: uppercase;
+  animation: textShadow 4s infinite;
 }
 
 .terminal,
 .fullscreen {
-	color: var(--color);
-	text-shadow: 0 0 5px #c8c8c8;
+  color: var(--color);
+  text-shadow: 0 0 5px #c8c8c8;
 }
 
 ::selection {
-	background: var(--color);
-	color: var(--bg);
-	text-shadow: none;
+  background: var(--color);
+  color: var(--bg);
+  text-shadow: none;
 }
 
 /* Scanline moving top to bottom over the screen */
 .scanline {
-	width: 100%;
-	height: 100px;
-	z-index: 8;
-	background: linear-gradient(
-		0deg,
-		rgba(0, 0, 0, 0) 0%,
-		rgba(255, 255, 255, 0.2) 10%,
-		rgba(0, 0, 0, 0.1) 100%
-	);
-	opacity: 0.1;
-	position: absolute;
-	bottom: 100%;
-	pointer-events: none;
-	animation: scanline 10s linear infinite;
+  width: 100%;
+  height: 100px;
+  z-index: 8;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(255, 255, 255, 0.2) 10%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  opacity: 0.1;
+  position: absolute;
+  bottom: 100%;
+  pointer-events: none;
+  animation: scanline 10s linear infinite;
 }
 
 /*********** CONTROLS *************/
 button {
-	cursor: pointer;
-	outline: none;
-	color: var(--dark);
+  cursor: pointer;
+  outline: none;
+  color: var(--dark);
 }
 #controls {
-	width: 100%;
-	margin-top: 2em;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  width: 100%;
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #volume {
-	position: relative;
-	color: #888;
-	font-variant: small-caps;
+  position: relative;
+  color: #888;
+  font-variant: small-caps;
 }
 #volume:after {
-	position: absolute;
-	content: "volume";
-	bottom: -1.5rem;
-	width: 100%;
-	left: 0;
-	text-align: center;
+  position: absolute;
+  content: "volume";
+  bottom: -1.5rem;
+  width: 100%;
+  left: 0;
+  text-align: center;
 }
 
 #monitor:not(.off) button:active,
 #monitor:not(.off) #themes button.active {
-	background-color: var(--color);
-	position: relative;
+  background-color: var(--color);
+  position: relative;
 }
 #monitor:not(.off) #themes button.active:before {
-	content: " ";
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	box-shadow: 0.6px 0px 25px -3px var(--color);
-	left: 0;
-	top: 0;
-	border-radius: 50%;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0.6px 0px 25px -3px var(--color);
+  left: 0;
+  top: 0;
+  border-radius: 50%;
 }
 
 #themes {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 #themes button {
-	width: 3rem;
-	height: 3rem;
-	margin: 0.5rem;
-	border: 0.25rem solid var(--dark);
-	border-radius: 50%;
-	box-shadow: inset 0 0 10px 0 #000;
-	cursor: pointer;
-	outline: none;
+  width: 3rem;
+  height: 3rem;
+  margin: 0.5rem;
+  border: 0.25rem solid var(--dark);
+  border-radius: 50%;
+  box-shadow: inset 0 0 10px 0 #000;
+  cursor: pointer;
+  outline: none;
 }
 
 #power {
-	display: flex;
-	align-items: flex-end;
+  display: flex;
+  align-items: flex-end;
 }
 
 #fullscreen {
-	border: 0.25rem solid var(--dark);
-	padding: 1rem;
-	background-color: rgb(186, 189, 182);
-	transition: opacity 0.5s;
-	font-weight: bold;
-	line-height: 1rem;
+  border: 0.25rem solid var(--dark);
+  padding: 1rem;
+  background-color: rgb(186, 189, 182);
+  transition: opacity 0.5s;
+  font-weight: bold;
+  line-height: 1rem;
 }
 
 body.fullscreen #fullscreen {
-	position: fixed;
-	top: 1rem;
-	right: 1rem;
-	z-index: 1001;
-	transform: rotate(180deg);
-	opacity: 0.5;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1001;
+  transform: rotate(180deg);
+  opacity: 0.5;
 }
 
 body.fullscreen #fullscreen:hover {
-	opacity: 1;
+  opacity: 1;
 }
 
 button[data-theme="red"] {
-	background: var(--red-bg);
-	border-color: var(--red-color);
+  background: var(--red-bg);
+  border-color: var(--red-color);
 }
 button[data-theme="green"] {
-	background: var(--green-bg);
-	border-color: var(--green-color);
+  background: var(--green-bg);
+  border-color: var(--green-color);
 }
 button[data-theme="blue"] {
-	background: var(--blue-bg);
-	border-color: var(--blue-color);
+  background: var(--blue-bg);
+  border-color: var(--blue-color);
 }
 
 /*********** RANDOM OTHER STUFF *************/
 
 .access-granted {
-	animation: flicker 2s infinite;
-	position: fixed;
-	text-align: center;
-	background: var(--bg);
-	border: 2px solid var(--color);
-	padding: 10px 30px;
-	left: 50%;
-	top: 40%;
-	transform: translateX(-50%);
-	z-index: 999;
+  animation: flicker 2s infinite;
+  position: fixed;
+  text-align: center;
+  background: var(--bg);
+  border: 2px solid var(--color);
+  padding: 10px 30px;
+  left: 50%;
+  top: 40%;
+  transform: translateX(-50%);
+  z-index: 999;
 }
 
 /*********** SLIDER ********************/
 
 #slider {
-	display: none;
+  display: none;
 }
 .switch {
-	position: relative;
-	display: inline-block;
-	width: 60px;
-	height: 34px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
 }
 
 /* Hide default HTML checkbox */
 .switch input {
-	opacity: 0;
-	width: 0;
-	height: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 /* The slider */
 .slider {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: var(--bg);
-	-webkit-transition: 0.4s;
-	transition: 0.4s;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
-	position: absolute;
-	content: "O";
-	height: 26px;
-	width: 26px;
-	left: 4px;
-	bottom: 4px;
-	background-color: var(--color);
-	-webkit-transition: 0.4s;
-	transition: 0.4s;
-	display: grid;
-	place-items: center;
+  position: absolute;
+  content: "O";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--color);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  display: grid;
+  place-items: center;
 }
 
 input:checked + .slider {
-	background-color: var(--color);
+  background-color: var(--color);
 }
 
 input:focus + .slider {
-	box-shadow: 0 0 6px 1px var(--color) inset;
+  box-shadow: 0 0 6px 1px var(--color) inset;
 }
 
 input:checked + .slider:before {
-	background-color: var(--bg);
-	color: var(--color);
-	content: "I";
-	-webkit-transform: translateX(26px);
-	-ms-transform: translateX(26px);
-	transform: translateX(26px);
+  background-color: var(--bg);
+  color: var(--color);
+  content: "I";
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 /*********** MEDIA QUERIES *************/
 
 /* For really small screens, only show fullscreen mode */
 @media only screen and (max-width: 425px), (max-height: 425px) {
-	#crt {
-		position: fixed;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-	}
+  #crt {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
 
-	#controls {
-		display: none;
-	}
-	#slider {
-		display: initial;
-		position: fixed;
-		top: 50%;
-		right: 50%;
-		opacity: 1;
-		transition: top 1s ease-out, right 1s ease-out,
-			opacity 1s ease-out;
-		animation: glow 3s ease-in-out infinite;
-	}
-	#slider.on {
-		top: 10px;
-		right: 10px;
-		opacity: 0.2;
-		animation: none;
-	}
+  #controls {
+    display: none;
+  }
+  #slider {
+    display: initial;
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    opacity: 1;
+    transition: top 1s ease-out, right 1s ease-out, opacity 1s ease-out;
+    animation: glow 3s ease-in-out infinite;
+  }
+  #slider.on {
+    top: 10px;
+    right: 10px;
+    opacity: 0.2;
+    animation: none;
+  }
 }
 
 /* Some fixes for smaller screens */
 @media only screen and (max-width: 768px) {
-	#themes,
-	#volume {
-		display: none;
-	}
+  #themes,
+  #volume {
+    display: none;
+  }
 
-	#power {
-		width: 100%;
-		justify-content: space-around;
-	}
+  #power {
+    width: 100%;
+    justify-content: space-around;
+  }
 }
 @media only screen and (min-width: 800px) {
-	#themes {
-		flex-direction: row;
-	}
+  #themes {
+    flex-direction: row;
+  }
 }
