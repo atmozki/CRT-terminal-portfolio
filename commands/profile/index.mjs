@@ -1,10 +1,10 @@
-// Show my porfolio as a user profile
+// Shows details about my profile
 
 const output = [
   " ",
-  "Username: atmozki",
-  " ",
   "Name: Dennis Jojo Kuriakose",
+  " ",
+  "Codename: atmozki",
   " ",
   "Email: dennisjojo052001@gmail.com",
   " ",
@@ -12,13 +12,7 @@ const output = [
   " ",
   "Address: REDACTED, KERALA, INDIA",
   " ",
-  "Github: atmozki",
-  " ",
-  "LinkedIn: dennisjojok",
-  " ",
-  "Portfolio: atmozki.github.io",
-  " ",
-  "This a console based portfolio",
+  "This a interactive terminal based concept portfolio.",
   " ",
 ];
 

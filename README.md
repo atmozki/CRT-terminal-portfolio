@@ -14,7 +14,7 @@
 
 ## Introduction
 
-This is a concept portfolio website that is inspired by the CRT terminal and Edwin Keijl's Retro CRT terminal screen 🤗 . It is built using HTML, CSS, and JavaScript. The website is hosted on GitHub pages. The screenshots of the website are shown below.
+This is a interactive terminal based concept portfolio website that is inspired by the CRT terminal and Edwin Keijl's Retro CRT terminal screen 🤗. It is built using HTML, CSS, and JavaScript. The website is hosted on GitHub pages. The screenshots of the website are shown below.
 
 ## How to use
 
@@ -30,8 +30,6 @@ This is a concept portfolio website that is inspired by the CRT terminal and Edw
 - `projects` - To get a list of my projects.
 - `contact` - To get my contact information.
 - `about` - To get information about this project.
-- `clear` - To clear the terminal.
-- `quit` - To quit the terminal.
 
 ### Kept some original commands from Keijl's project
 
@@ -43,6 +41,8 @@ This is a concept portfolio website that is inspired by the CRT terminal and Edw
 - `joke` - To get a joke.
 - `fire` - To see the fire effect.
 - `reboot` - To reboot the terminal.
+- `clear` - To clear the terminal.
+- `quit` - To quit the terminal.
 
 ## Screenshots
 
