@@ -50,7 +50,6 @@ This is an interactive terminal based concept portfolio website that is inspired
 <a><img height='230px' src='https://i.imgur.com/YNqDKrV.jpg'></a>
 <a><img height='230px' src='https://i.imgur.com/JtOQ9Hi.jpg'></a>
 <a><img height='230px' src='https://i.imgur.com/01AlTs8.jpg'></a>
-
 </p>
 
 ## Credits
