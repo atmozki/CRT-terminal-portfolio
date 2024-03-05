@@ -1,6 +1,6 @@
 <h1 align='center'>CRT-terminal-portfolio</h1>
 
-![Banner](https://svg-banners.vercel.app/api?type=typeWriter&text1=CRT%20Terminal%20Portfolio%F0%9F%A7%91%E2%80%8D%F0%9F%92%BB&width=1000&height=200)
+![Banner](https://svg-banners.vercel.app/api?type=typeWriter&text1=CRT%20Terminal%20Portfolio%F0%9F%A7%91%E2%80%8D%F0%9F%92%BB&width=1000&height=150)
 
 > Username for the terminal: `dennis`
 
@@ -28,7 +28,7 @@ This is an interactive terminal based concept portfolio website that is inspired
 - `profile` - To get my profile information.
 - `skills` - To get a list of my skills.
 - `projects` - To get a list of my projects.
-- `contact` - To get my contact information.
+- `contacts` - To get my contact information.
 - `about` - To get information about this project.
 
 ### Kept some original commands from Keijl's project
