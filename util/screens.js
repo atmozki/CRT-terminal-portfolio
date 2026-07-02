@@ -19,84 +19,104 @@ async function boot() {
 	setAdmin(false);
 	clear();
 
-	// Any key or click fast-forwards the boot sequence
-	const skip = () => setFastForward(true);
+	// Any key or click fast-forwards the boot sequence. Clicks on
+	// the power switch and theme buttons don't count, turning the
+	// terminal off is not a request to speed it up.
+	const skip = (event) => {
+		if (
+			event.type === "click" &&
+			event.target.closest("#controls, #slider")
+		) {
+			return;
+		}
+		setFastForward(true);
+	};
 	document.addEventListener("keydown", skip);
 	document.addEventListener("click", skip);
 
-	await type(
-		[
-			"ATMOZKI DATANET(TM) UNIFIED PERSONNEL RECORDS",
-			"NODE 07 // MELBOURNE RELAY",
-			"[ ANY KEY FAST-FORWARDS THE BOOT ]",
-			" "
-		],
-		{ wait: 20, initialWait: 1500, lineWait: 500 }
-	);
+	// The finally puts the speed back to normal and drops the skip
+	// listeners on every exit, including the early returns after a
+	// mid-boot power off. Otherwise fast mode leaks into every
+	// following boot until the page is reloaded.
+	try {
+		await type(
+			[
+				"ATMOZKI DATANET(TM) UNIFIED PERSONNEL RECORDS",
+				"NODE 07 // MELBOURNE RELAY",
+				"[ ANY KEY FAST-FORWARDS THE BOOT ]",
+				" "
+			],
+			{ wait: 20, initialWait: 1500, lineWait: 500 }
+		);
 
-	await type(
-		[
-			"> SET TERMINAL/BOOT",
-			"ESTABLISHING UPLINK........... OK",
-			"CALIBRATING CRT PHOSPHOR...... OK",
-			"MOUNTING RECORD ARCHIVE....... OK",
-			" "
-		],
-		{ wait: 20, lineWait: 450 }
-	);
+		await type(
+			[
+				"> SET TERMINAL/BOOT",
+				"ESTABLISHING UPLINK........... OK",
+				"CALIBRATING CRT PHOSPHOR...... OK",
+				"MOUNTING RECORD ARCHIVE....... OK",
+				" "
+			],
+			{ wait: 20, lineWait: 450 }
+		);
 
-	// Each boot phase gets its own clean screen, so the text
-	// never piles up into a wall
-	await pause(0.7);
-	if (mySession !== currentSession()) return;
-	clear();
+		// Each boot phase gets its own clean screen, so the text
+		// never piles up into a wall
+		await pause(0.7);
+		if (mySession !== currentSession()) return;
+		clear();
 
-	await type(
-		["> SET TERMINAL/LOGON", "OPERATOR AUTHENTICATION REQUIRED", " "],
-		{ wait: 20, initialWait: 300, lineWait: 400 }
-	);
+		await type(
+			[
+				"> SET TERMINAL/LOGON",
+				"OPERATOR AUTHENTICATION REQUIRED",
+				" "
+			],
+			{ wait: 20, initialWait: 300, lineWait: 400 }
+		);
 
-	// The system types the guest credentials in by itself
-	await type("OPERATOR ID: guest.analyst.7734", {
-		wait: 45,
-		initialWait: 400,
-		sound: true
-	});
-	await type("AUTH TOKEN:  ************", {
-		wait: 35,
-		initialWait: 250,
-		sound: true
-	});
+		// The system types the guest credentials in by itself
+		await type("OPERATOR ID: guest.analyst.7734", {
+			wait: 45,
+			initialWait: 400,
+			sound: true
+		});
+		await type("AUTH TOKEN:  ************", {
+			wait: 35,
+			initialWait: 250,
+			sound: true
+		});
 
-	await type(
-		[
-			" ",
-			"VALIDATING..........",
-			"CLEARANCE: LEVEL 1 // GUEST ANALYST",
-			"ACCESS GRANTED."
-		],
-		{ wait: 20, initialWait: 300, lineWait: 400 }
-	);
+		await type(
+			[
+				" ",
+				"VALIDATING..........",
+				"CLEARANCE: LEVEL 1 // GUEST ANALYST",
+				"ACCESS GRANTED."
+			],
+			{ wait: 20, initialWait: 300, lineWait: 400 }
+		);
 
-	await pause(0.7);
-	if (mySession !== currentSession()) return;
-	clear();
+		await pause(0.7);
+		if (mySession !== currentSession()) return;
+		clear();
 
-	await type(
-		[
-			"> QUERY PERSONNEL 'KURIAKOSE, DENNIS JOJO'",
-			"SEARCHING RECORD ARCHIVE...",
-			"1 MATCH FOUND: SUBJECT FILE #DJK-2001",
-			"DECRYPTING"
-		],
-		{ wait: 20, initialWait: 300, lineWait: 450 }
-	);
+		await type(
+			[
+				"> QUERY PERSONNEL 'KURIAKOSE, DENNIS JOJO'",
+				"SEARCHING RECORD ARCHIVE...",
+				"1 MATCH FOUND: SUBJECT FILE #DJK-2001",
+				"DECRYPTING"
+			],
+			{ wait: 20, initialWait: 300, lineWait: 450 }
+		);
 
-	await type([".", ".", "."], { lineWait: 200 });
-
-	document.removeEventListener("keydown", skip);
-	document.removeEventListener("click", skip);
-	setFastForward(false);
+		await type([".", ".", "."], { lineWait: 200 });
+	} finally {
+		document.removeEventListener("keydown", skip);
+		document.removeEventListener("click", skip);
+		setFastForward(false);
+	}
 
 	// Powered off during the boot sequence
 	if (mySession !== currentSession()) return;
