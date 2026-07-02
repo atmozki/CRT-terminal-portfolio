@@ -29,10 +29,12 @@ Built with vanilla HTML, CSS and JavaScript. No frameworks, no build step.
 - `projects` - field operations log
 - `contacts` - open comm channels
 - `dossier` - the full subject file in one go
+- `scan` - run a live subject scan, progress bars included
 - `about` - about this terminal
 
 ### System
 
+- `trace` - the terminal traces you back (client-side only, nothing is collected or sent anywhere)
 - `clear` - wipe the screen
 - `reboot` - restart the terminal
 - `quit` - terminate the uplink

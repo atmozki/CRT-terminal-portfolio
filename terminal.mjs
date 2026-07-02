@@ -1,6 +1,7 @@
 import { type } from "./util/io.js";
 
 import { registerHandlers } from "./util/ui.mjs";
+import { startIdleWatch } from "./util/idle.js";
 
 async function onLoad() {
 	// Check for query parameters in the URL, e.g. ?command=help&fullscreen=1
@@ -10,6 +11,9 @@ async function onLoad() {
 
 	// Set up click event handlers for UI buttons
 	registerHandlers();
+
+	// The terminal speaks up when the operator goes quiet
+	startIdleWatch();
 
 	// If a command is passed in the URL, execute that immediately
 	if (command || debugParam) {
