@@ -1,7 +1,7 @@
 // Turns the dossier around on the visitor.
 // Everything is read client-side, nothing is collected or sent anywhere.
 
-import { type } from "../../util/io.js";
+import { type, currentSession } from "../../util/io.js";
 
 function detectBrowser() {
 	const ua = navigator.userAgent;
@@ -24,6 +24,8 @@ function detectSystem() {
 }
 
 export default async () => {
+	const mySession = currentSession();
+
 	await type(
 		[
 			"> TRACE ROUTE REQUESTED",
@@ -34,6 +36,9 @@ export default async () => {
 	);
 
 	await type([".", ".", ".", "."], { lineWait: 300 });
+
+	// Powered off mid trace, the new session gets no leftovers
+	if (mySession !== currentSession()) return;
 
 	let timezone = "UNKNOWN";
 	try {
