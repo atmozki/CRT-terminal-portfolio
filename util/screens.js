@@ -8,12 +8,15 @@ import {
 } from "./io.js";
 import pause from "./pause.js";
 import alert from "./alert.js";
+import { setAdmin } from "./clearance.js";
 
 /** Boot screen */
 async function boot() {
 	// Leftovers of the previous session (interrupted typing, an
 	// abandoned input loop) stop as soon as this bumps
 	const mySession = newSession();
+	// A fresh boot always starts as a guest
+	setAdmin(false);
 	clear();
 
 	// Any key or click fast-forwards the boot sequence
@@ -100,12 +103,9 @@ async function intro() {
 	await type(
 		[
 			"=============================================",
-			" SUBJECT FILE #DJK-2001",
-			" KURIAKOSE, DENNIS JOJO // ALIAS 'ATMOZKI'",
-			" ROLE: DATA SCIENTIST",
-			" CLEARANCE: GUEST ANALYST",
+			" SUBJECT FILE #DJK-2001 // KURIAKOSE, D.J.",
+			" 'ATMOZKI' // DATA SCIENTIST // GUEST ACCESS",
 			"=============================================",
-			" ",
 			"TYPE help TO LIST AVAILABLE QUERIES.",
 			" "
 		],

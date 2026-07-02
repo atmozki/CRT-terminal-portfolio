@@ -4,6 +4,7 @@
 
 import { prompt, type, currentSession } from "../../util/io.js";
 import alert from "../../util/alert.js";
+import { setAdmin } from "../../util/clearance.js";
 
 export default async () => {
 	const mySession = currentSession();
@@ -24,6 +25,7 @@ export default async () => {
 			lineWait: 200
 		});
 		if (mySession !== currentSession()) return;
+		setAdmin(true);
 		await alert("IDENTITY CONFIRMED");
 		await type(
 			[

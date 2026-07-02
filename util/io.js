@@ -186,6 +186,7 @@ async function type(
 		}
 
 		let prev;
+		let soundTick = 0;
 
 		// Use an interval to repeatedly pop a character from the queue and type it on screen
 		interval = setInterval(async () => {
@@ -224,8 +225,14 @@ async function type(
 					typer.appendChild(element);
 					scroll(container);
 					// Keystroke sound, as if invisible hands
-					// were typing. Muted while fast-forwarding.
-					if (sound && !fastForward) {
+					// were typing. Every other character keeps
+					// it from machine-gunning, and it mutes
+					// while fast-forwarding.
+					if (
+						sound &&
+						!fastForward &&
+						soundTick++ % 2 === 0
+					) {
 						typeSound();
 					}
 				}
