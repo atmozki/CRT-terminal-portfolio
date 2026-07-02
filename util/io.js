@@ -114,7 +114,8 @@ async function type(
 		useContainer = false,
 		stopBlinking = true,
 		processChars = true,
-		clearContainer = false
+		clearContainer = false,
+		sound = false
 	} = options;
 
 	if (fastForward) {
@@ -222,6 +223,11 @@ async function type(
 				if (element) {
 					typer.appendChild(element);
 					scroll(container);
+					// Keystroke sound, as if invisible hands
+					// were typing. Muted while fast-forwarding.
+					if (sound && !fastForward) {
+						typeSound();
+					}
 				}
 				prev = element;
 			} else {

@@ -43,14 +43,30 @@ async function boot() {
 	);
 
 	await type(
+		["> SET TERMINAL/LOGON", "OPERATOR AUTHENTICATION REQUIRED"],
+		{ wait: 20, lineWait: 400 }
+	);
+
+	// The system types the guest credentials in by itself
+	await type("OPERATOR ID: guest.analyst.7734", {
+		wait: 45,
+		initialWait: 400,
+		sound: true
+	});
+	await type("AUTH TOKEN:  ************", {
+		wait: 35,
+		initialWait: 250,
+		sound: true
+	});
+
+	await type(
 		[
-			"> SET TERMINAL/LOGON",
-			"VERIFYING CLEARANCE...",
-			"NO OPERATOR CREDENTIALS FOUND.",
-			"GUEST ANALYST ACCESS GRANTED. LEVEL 1.",
+			"VALIDATING..........",
+			"CLEARANCE: LEVEL 1 // GUEST ANALYST",
+			"ACCESS GRANTED.",
 			" "
 		],
-		{ wait: 20, lineWait: 500 }
+		{ wait: 20, initialWait: 300, lineWait: 400 }
 	);
 
 	await type(

@@ -8,17 +8,26 @@ let keys = [
 	new Audio("./sound/key4.mp3")
 ];
 
+// play() rejects when the browser blocks audio before the first
+// user gesture, swallow it instead of spamming the console
+function play(audio) {
+	let result = audio.play();
+	if (result) {
+		result.catch(() => {});
+	}
+}
+
 function button() {
-	buttonSound.play();
+	play(buttonSound);
 }
 function click() {
-	clickSound.play();
+	play(clickSound);
 }
 
 function typeSound() {
 	let i = Math.floor(Math.random() * keys.length);
 	keys[i].currentTime = 0;
-	keys[i].play();
+	play(keys[i]);
 }
 
 export { button, click, typeSound };

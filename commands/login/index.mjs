@@ -13,8 +13,14 @@ export default async () => {
 	if (mySession !== currentSession()) return;
 
 	if (user === "dennis" || user === "atmozki") {
-		await type(["VERIFYING", ".", ".", "."], {
+		// The system fills the admin token in by itself
+		await type("AUTH TOKEN:  ****************", {
+			wait: 35,
 			initialWait: 300,
+			sound: true
+		});
+		await type(["VALIDATING", ".", ".", "."], {
+			initialWait: 200,
 			lineWait: 200
 		});
 		if (mySession !== currentSession()) return;
