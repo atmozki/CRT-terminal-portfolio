@@ -1,19 +1,25 @@
-// Shows some of my skills
+// Capability readout
 
 const output = [
   " ",
-  "Programming Languages:",
+  "CAPABILITY READOUT // SUBJECT #DJK-2001",
+  "---------------------------------------------",
   " ",
-  "HTML, CSS, JavaScript, Python, C, C++, Java, PHP, SQL, Bash, Batch, PowerShell, Assembly, Lua",
+  "PRIMARY SYSTEMS",
+  "  Python ....... pandas, NumPy, scikit-learn",
+  "  SQL .......... PostgreSQL, MySQL, dbt",
+  "  ML ........... regression, classification, clustering",
+  "  Analytics .... Streamlit, matplotlib, seaborn",
   " ",
-  "Databases:",
+  "SECONDARY SYSTEMS",
+  "  Web .......... HTML, CSS, JavaScript, React, Tailwind",
+  "  Data eng ..... ETL pipelines, data modelling",
+  "  Tooling ...... Git, GitHub, Linux, VS Code, AWS",
   " ",
-  "MySQL",
-  " ",
-  "Tools:",
-  " ",
-  "Git, GitHub, GitLab, VS Code, Atom, Vim, Emacs, Linux, Windows, Vercel, AWS, ARCH, Debian, Ubuntu",
+  "THREAT LEVEL: HIGH (TO UNANSWERED QUESTIONS)",
   " ",
 ];
 
-export { output };
+const typeOptions = { wait: 8, lineWait: 80, initialWait: 400 };
+
+export { output, typeOptions };

@@ -1,48 +1,69 @@
-<h1 align='center'>CRT-terminal-portfolio</h1>
+<h1 align='center'>CRT Terminal Portfolio</h1>
 
 ![Banner](https://svg-banners.vercel.app/api?type=typeWriter&text1=CRT%20Terminal%20Portfolio%F0%9F%A7%91%E2%80%8D%F0%9F%92%BB&width=1000&height=150)
 
-> Username for the terminal: `dennis`
+A retro CRT terminal that treats my portfolio like a classified personnel file. The terminal boots, grants you guest analyst clearance, pulls up subject file #DJK-2001, and lets you interrogate the record.
+
+Built with vanilla HTML, CSS and JavaScript. No frameworks, no build step.
 
 ## Table of Contents
 
-- [Introduction](#introduction)
 - [How to use](#how-to-use)
 - [Commands](#commands)
+- [Running locally](#running-locally)
 - [Screenshots](#screenshots)
 - [Credits](#credits)
 
-## Introduction
-
-This is an interactive terminal based concept portfolio website that is inspired by the CRT terminal and Edwin Keijl's Retro CRT terminal screen 🤗. It is built using HTML, CSS, and JavaScript. The website is hosted on GitHub pages. The screenshots of the website are shown below.
-
 ## How to use
 
-- Go to this [page](https://atmozki.github.io/CRT-terminal-portfolio/)
-- When asked for the user name, Enter `dennis`
-- To get a list of commands, enter `help`
+- Visit the [live site](https://atmozki.github.io/CRT-terminal-portfolio/)
+- Flip the power switch and let it boot (any key skips the intro)
+- Type `help` to see what you can query
 
 ## Commands
 
-- `help` - To get a list of commands.
-- `profile` - To get my profile information.
-- `skills` - To get a list of my skills.
-- `projects` - To get a list of my projects.
-- `contacts` - To get my contact information.
-- `about` - To get information about this project.
+### Record queries
 
-### Kept some original commands from Keijl's project
+- `profile` - subject summary
+- `skills` - capability readout
+- `projects` - field operations log
+- `contacts` - open comm channels
+- `dossier` - the full subject file in one go
+- `about` - about this terminal
 
-- `dino` - To play the dino game.
-- `hackerman` - To play the hackerman game. Press `Enter` to show "ACCESS GRANTED" & `CTRL + c` to exit.
-- `matrix` - To see the matrix effect.
-- `screensaver` - To see the dvd screensaver.
-- `cowsay` - To use the cowsay command.
-- `joke` - To get a joke.
-- `fire` - To see the fire effect.
-- `reboot` - To reboot the terminal.
-- `clear` - To clear the terminal.
-- `quit` - To quit the terminal.
+### System
+
+- `clear` - wipe the screen
+- `reboot` - restart the terminal
+- `quit` - terminate the uplink
+
+### Recreation
+
+- `dino` - play the dino game
+- `hackerman` - mash Enter for ACCESS GRANTED, Ctrl+C to exit
+- `matrix` - the matrix rain effect
+- `screensaver` - the bouncing DVD logo
+- `cowsay` - a cow says things
+- `joke` - one joke, no refunds
+- `fire` - set the terminal on fire
+
+There are also a few commands that are not listed anywhere. Operators who used to run this terminal might guess one.
+
+## Running locally
+
+Any static file server works. From the project root:
+
+```
+npx serve
+```
+
+or
+
+```
+python -m http.server
+```
+
+Then open the printed localhost URL. A server is required because the terminal loads its commands as ES modules.
 
 ## Screenshots
 
@@ -54,4 +75,4 @@ This is an interactive terminal based concept portfolio website that is inspired
 
 ## Credits
 
-- Edwin Keijl's Retro CRT terminal [screen](https://dev.to/ekeijl/retro-crt-terminal-screen-in-css-js-4afh)
+- Edwin Keijl's retro CRT terminal [screen](https://dev.to/ekeijl/retro-crt-terminal-screen-in-css-js-4afh), which this project is built on

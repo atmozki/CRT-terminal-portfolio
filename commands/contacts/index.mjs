@@ -1,19 +1,17 @@
-// Shows my contacts details
+// Open comm channels
 
 const output = [
   " ",
-  "Email:dennisjojo052001@gmail.com",
+  "OPEN COMM CHANNELS",
+  "---------------------------------------------",
+  "EMAIL ....... dennisjojok@gmail.com",
+  "GITHUB ...... github.com/atmozki",
+  "LINKEDIN .... linkedin.com/in/dennisjk",
   " ",
-  "Github:https://github.com/atmozki",
-  " ",
-  "LinkedIn:http://linkedin.com/in/dennisjk",
-  " ",
-  "Twitter:http://twitter.com/dennisjojok",
-  " ",
-  "Instagram:https://www.instagram.com/____iamdj____/",
-  " ",
-  "dev.to:https://dev.to/atmozki",
+  "ALL CHANNELS MONITORED. RESPONSE TIME: FAST.",
   " ",
 ];
 
-export { output };
+const typeOptions = { wait: 8, lineWait: 80, initialWait: 400 };
+
+export { output, typeOptions };

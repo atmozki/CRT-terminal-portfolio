@@ -7,6 +7,13 @@ let prev = getHistory();
 let historyIndex = -1;
 let tmp = "";
 
+// When enabled, type() runs near-instantly. Used to fast-forward the boot sequence.
+let fastForward = false;
+
+function setFastForward(enabled) {
+	fastForward = enabled;
+}
+
 function getHistory() {
 	let storage = localStorage.getItem("commandHistory");
 	let prev;
@@ -96,6 +103,13 @@ async function type(
 		clearContainer = false
 	} = options;
 
+	if (fastForward) {
+		wait = 4;
+		initialWait = 0;
+		finalWait = 0;
+		lineWait = 0;
+	}
+
 	// If text is an array, e.g. type(['foo', 'bar'])
 	if (processChars && Array.isArray(text)) {
 		for (const t of text)
@@ -174,10 +188,7 @@ async function type(
 					: char;
 				if (element) {
 					typer.appendChild(element);
-
-					if (element.nodeName === "BR") {
-						scroll(container);
-					}
+					scroll(container);
 				}
 				prev = element;
 			} else {
@@ -191,17 +202,6 @@ async function type(
 			}
 		}, wait);
 	});
-}
-
-function isPrintable(keycode) {
-	return (
-		(keycode > 47 && keycode < 58) || // number keys
-		keycode === 32 || // spacebar & return key(s) (if you want to allow carriage returns)
-		(keycode > 64 && keycode < 91) || // letter keys
-		(keycode > 95 && keycode < 112) || // numpad keys
-		(keycode > 185 && keycode < 193) || // ;=,-./` (in order)
-		(keycode > 218 && keycode < 223)
-	);
 }
 
 function moveCaretToEnd(el) {
@@ -219,23 +219,57 @@ function moveCaretToEnd(el) {
 /** Shows an input field, returns a resolved promise with the typed text on <enter> */
 async function input(pw) {
 	return new Promise((resolve) => {
-		// This handles all user input
+		let terminal = document.querySelector(".terminal");
+		let input = document.createElement("span");
+		input.setAttribute("id", "input");
+		if (pw) {
+			input.classList.add("password");
+		}
+		input.setAttribute("contenteditable", true);
+		input.setAttribute("autocapitalize", "off");
+		input.setAttribute("autocorrect", "off");
+		input.setAttribute("spellcheck", "false");
+		input.setAttribute("enterkeyhint", "go");
+
+		let submitted = false;
+
+		const submit = () => {
+			if (submitted) return;
+			submitted = true;
+			input.setAttribute("contenteditable", false);
+			let result = cleanInput(input.textContent);
+			addToHistory(result);
+			resolve(result);
+		};
+
+		const appendChar = (chr) => {
+			// Wrap the character in a span
+			let span = document.createElement("span");
+			span.classList.add("char");
+			span.textContent = chr;
+			input.appendChild(span);
+
+			// For password field, fill the data-pw attr with asterisks
+			// which will be shown using CSS
+			if (pw) {
+				let length = input.textContent.length;
+				input.setAttribute(
+					"data-pw",
+					Array(length).fill("*").join("")
+				);
+			}
+			moveCaretToEnd(input);
+			scroll(terminal, true);
+		};
+
+		// Physical keyboards: keys are handled here and the
+		// default editing action is prevented
 		const onKeyDown = (event) => {
 			typeSound();
 			// ENTER
 			if (event.keyCode === 13) {
 				event.preventDefault();
-				event.target.setAttribute(
-					"contenteditable",
-					false
-				);
-				let result = cleanInput(
-					event.target.textContent
-				);
-
-				// history
-				addToHistory(result);
-				resolve(result);
+				submit();
 			}
 			// UP
 			else if (event.keyCode === 38) {
@@ -262,48 +296,49 @@ async function input(pw) {
 					event.target.innerHTML = "";
 				}
 			}
-			// Check if character can be shown as output (skip if CTRL is pressed)
-			else if (isPrintable(event.keyCode) && !event.ctrlKey) {
+			// Printable character (skip when a modifier is held)
+			else if (
+				event.key &&
+				event.key.length === 1 &&
+				!event.ctrlKey &&
+				!event.metaKey
+			) {
 				event.preventDefault();
-				// Wrap the character in a span
-				let span = document.createElement("span");
-
-				let keyCode = event.keyCode;
-				let chrCode =
-					keyCode - 48 * Math.floor(keyCode / 48);
-				let chr = String.fromCharCode(
-					96 <= keyCode ? chrCode : keyCode
-				);
-				// Add span to the input
-				span.classList.add("char");
-				span.textContent = chr;
-				event.target.appendChild(span);
-
-				// For password field, fill the data-pw attr with asterisks
-				// which will be shown using CSS
-				if (pw) {
-					let length =
-						event.target.textContent.length;
-					event.target.setAttribute(
-						"data-pw",
-						Array(length).fill("*").join("")
-					);
-				}
-				moveCaretToEnd(event.target);
+				appendChar(event.key);
 			}
 		};
 
-		// Add input to terminal
-		let terminal = document.querySelector(".terminal");
-		let input = document.createElement("span");
-		input.setAttribute("id", "input");
-		if (pw) {
-			input.classList.add("password");
-		}
-		input.setAttribute("contenteditable", true);
+		// Virtual keyboards (mobile) often send unidentified keydown
+		// events, the actual text only arrives through beforeinput
+		const onBeforeInput = (event) => {
+			if (
+				event.inputType === "insertParagraph" ||
+				event.inputType === "insertLineBreak"
+			) {
+				event.preventDefault();
+				submit();
+			} else if (
+				event.inputType === "insertText" &&
+				event.data
+			) {
+				event.preventDefault();
+				typeSound();
+				[...event.data].forEach(appendChar);
+			} else if (
+				event.inputType === "deleteContentBackward" &&
+				input.textContent.length === 1
+			) {
+				// Prevent a stray <br> when removing the last character
+				event.preventDefault();
+				input.innerHTML = "";
+			}
+		};
+
 		input.addEventListener("keydown", onKeyDown);
+		input.addEventListener("beforeinput", onBeforeInput);
 		terminal.appendChild(input);
 		input.focus();
+		scroll(terminal, true);
 	});
 }
 
@@ -318,14 +353,16 @@ async function parse(input) {
 	let matches = String(input).match(/^(\w+)(?:\s((?:\w+(?:\s\w+)*)))?$/);
 
 	if (!matches) {
-		throw new Error("Invalid command");
+		throw new Error("MALFORMED QUERY. TYPE help FOR A LIST.");
 	}
 	let command = matches[1];
 	let args = matches[2];
 
 	let naughty = ["fuck", "shit", "die", "ass", "cunt"];
 	if (naughty.some((word) => command.includes(word))) {
-		throw new Error("Please don't use that language");
+		throw new Error(
+			"LANGUAGE FILTER ENGAGED. THIS INCIDENT WILL BE REPORTED."
+		);
 	}
 
 	let module;
@@ -337,11 +374,11 @@ async function parse(input) {
 		console.error(e);
 		// Kinda abusing TypeError to check if the import failed
 		if (e instanceof TypeError) {
-			e.message = `Unknown command: ${command}`;
+			e.message = `QUERY NOT RECOGNIZED: ${command}. TYPE help FOR A LIST.`;
 		}
 		// E.g. syntax error
 		else {
-			e.message = "Error while executing command";
+			e.message = "QUERY FAULT. THE RECORD MAY BE CORRUPTED.";
 		}
 		throw e;
 	}
@@ -356,7 +393,8 @@ async function parse(input) {
 	});
 
 	// Show any output if the command exports any
-	await type(module.output);
+	// Commands can export typeOptions to control typing speed
+	await type(module.output, module.typeOptions ?? {});
 	await pause();
 
 	// Execute the command (default export)
@@ -369,8 +407,13 @@ function cleanInput(input) {
 	return input.toLowerCase().trim();
 }
 
-function scroll(el = document.querySelector(".terminal")) {
-	el.scrollTop = el.scrollHeight;
+function scroll(el = document.querySelector(".terminal"), force = false) {
+	// Stick to the bottom while typing, but leave the view alone
+	// when the user has scrolled up to read something
+	let nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 60;
+	if (force || nearBottom) {
+		el.scrollTop = el.scrollHeight;
+	}
 }
 
 /** Types the given text and asks input */
@@ -407,4 +450,13 @@ function addStylesheet(href) {
 	head.appendChild(link);
 }
 
-export { prompt, input, cleanInput, type, parse, scroll, waitForKey };
+export {
+	prompt,
+	input,
+	cleanInput,
+	type,
+	parse,
+	scroll,
+	waitForKey,
+	setFastForward
+};

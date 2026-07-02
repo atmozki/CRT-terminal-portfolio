@@ -1,6 +1,6 @@
 import { off } from "../../util/power.js";
 
-const output = "Goodbye.";
+const output = ["CLOSING SUBJECT FILE.", "UPLINK TERMINATED. GOODBYE."];
 
 export default () => {
 	return off();

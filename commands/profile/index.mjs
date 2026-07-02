@@ -1,19 +1,25 @@
-// Shows details about my profile
+// Subject summary
 
 const output = [
   " ",
-  "Name: Dennis Jojo Kuriakose",
+  "SUBJECT FILE #DJK-2001 // SUMMARY",
+  "---------------------------------------------",
+  "NAME ........ Dennis Jojo Kuriakose",
+  "ALIAS ....... atmozki",
+  "ROLE ........ Data Scientist",
+  "STATUS ...... ACTIVE // OPEN TO OPPORTUNITIES",
+  "LOCATION .... Melbourne, Australia",
+  "ORIGIN ...... Kerala, India",
+  "EDUCATION ... Master of Data Science (AUS)",
+  "              B.Tech Computer Science (IND)",
+  "EMAIL ....... dennisjojok@gmail.com",
+  "PHONE ....... [REDACTED]",
   " ",
-  "Codename: atmozki",
-  " ",
-  "Email: dennisjojo052001@gmail.com",
-  " ",
-  "Phone: REDACTED",
-  " ",
-  "Address: REDACTED, KERALA, INDIA",
-  " ",
-  "This an interactive terminal based concept portfolio.",
+  "ASSESSMENT: TURNS RAW DATA INTO DECISIONS.",
+  "RUN skills OR projects FOR DETAILS.",
   " ",
 ];
 
-export { output };
+const typeOptions = { wait: 8, lineWait: 80, initialWait: 400 };
+
+export { output, typeOptions };

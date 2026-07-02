@@ -1,69 +1,87 @@
-import { parse, type, prompt, input } from "./io.js";
+import { parse, type, input, setFastForward } from "./io.js";
 import pause from "./pause.js";
 import alert from "./alert.js";
-
-const USER = "dennis";
 
 /** Boot screen */
 async function boot() {
 	clear();
 
-	await type("Welcome to the DATABASE(TM) terminal", {
-		initialWait: 3000
-	});
+	// Any key or click fast-forwards the boot sequence
+	const skip = () => setFastForward(true);
+	document.addEventListener("keydown", skip);
+	document.addEventListener("click", skip);
 
-	await type(["> SET TERMINAL/BOOT", "Loading........................"], {
-		lineWait: 1000
-	});
 	await type(
 		[
-			".....",
-			"Please wait........",
-			"..........",
-			"...",
-			".",
-			".",
-			".",
-			".",
-			"."
+			"ATMOZKI DATANET(TM) UNIFIED PERSONNEL RECORDS",
+			"NODE 07 // MELBOURNE RELAY",
+			"[ ANY KEY FAST-FORWARDS THE BOOT ]",
+			" "
 		],
-		{ lineWait: 250 }
+		{ wait: 20, initialWait: 1500, lineWait: 500 }
 	);
 
-	await type(["OK.", " "]);
+	await type(
+		[
+			"> SET TERMINAL/BOOT",
+			"ESTABLISHING UPLINK........... OK",
+			"CALIBRATING CRT PHOSPHOR...... OK",
+			"MOUNTING RECORD ARCHIVE....... OK",
+			" "
+		],
+		{ wait: 20, lineWait: 450 }
+	);
 
-	await type(["> SET TERMINAL/LOGON", "USER AUTHENTICATION CHECK"], {
-		lineWait: 1000,
-		finalWait: 3000
-	});
+	await type(
+		[
+			"> SET TERMINAL/LOGON",
+			"VERIFYING CLEARANCE...",
+			"NO OPERATOR CREDENTIALS FOUND.",
+			"GUEST ANALYST ACCESS GRANTED. LEVEL 1.",
+			" "
+		],
+		{ wait: 20, lineWait: 500 }
+	);
 
-	await type([".", ".", ".", "."], { lineWait: 150 });
+	await type(
+		[
+			"> QUERY PERSONNEL 'KURIAKOSE, DENNIS JOJO'",
+			"SEARCHING RECORD ARCHIVE...",
+			"1 MATCH FOUND: SUBJECT FILE #DJK-2001",
+			"DECRYPTING"
+		],
+		{ wait: 20, lineWait: 450 }
+	);
 
-	await type(["ACCESS GRANTED.", "WELCOME, ADMINISTRATOR."], {
-		lineWait: 1000,
-		finalWait: 3000
-	});
+	await type([".", ".", "."], { lineWait: 200 });
 
-	await pause();
-	return login();
+	document.removeEventListener("keydown", skip);
+	document.removeEventListener("click", skip);
+	setFastForward(false);
+
+	await alert("SUBJECT FILE OPEN");
+	clear();
+	return intro();
 }
 
-/** Login screen */
-async function login() {
-	clear();
-	let user = await prompt("Enter the Name:");
+/** Subject file header, shown after boot */
+async function intro() {
+	await type(
+		[
+			"=============================================",
+			" SUBJECT FILE #DJK-2001",
+			" KURIAKOSE, DENNIS JOJO // ALIAS 'ATMOZKI'",
+			" ROLE: DATA SCIENTIST",
+			" CLEARANCE: GUEST ANALYST",
+			"=============================================",
+			" ",
+			"TYPE help TO LIST AVAILABLE QUERIES.",
+			" "
+		],
+		{ wait: 10, initialWait: 400, lineWait: 120 }
+	);
 
-	if (user === USER) {
-		await pause();
-		await alert("USER FOUND");
-		clear();
-		return main();
-	} else {
-		await type(["User Does Not Exist.", "Please try again"]);
-		await pause(3);
-		clear();
-		return login();
-	}
+	return main();
 }
 
 /** Main input terminal, recursively calls itself */
@@ -173,7 +191,7 @@ function clear(screen = document.querySelector(".terminal")) {
 
 export {
 	boot,
-	login,
+	intro,
 	main,
 	clear,
 	getScreen,

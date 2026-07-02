@@ -1,19 +1,21 @@
-// Shows details About this project
+// About this terminal
 
 const output = [
   " ",
-  "This is an interactive terminal based concept portfolio.",
+  "ABOUT THIS TERMINAL",
+  "---------------------------------------------",
+  "An interactive CRT terminal portfolio, built",
+  "with vanilla HTML, CSS and JavaScript.",
+  "No frameworks were harmed.",
   " ",
-  "This project is based on Edwin Keijl's Retro CRT terminal screen.",
+  "Based on Edwin Keijl's retro CRT terminal",
+  "screen. Redesigned in 2026 as a personnel",
+  "records system.",
   " ",
-  "The project is open source and can be found at my Github profile.",
-  " ",
-  "This project is build using HTML, CSS, JavaScript.",
-  " ",
-  "Thanks to Edwin Keijl for the inspiration :).",
-  " ",
-  "Thanks for visiting this project.",
+  "SOURCE: github.com/atmozki/CRT-terminal-portfolio",
   " ",
 ];
 
-export { output };
+const typeOptions = { wait: 8, lineWait: 80, initialWait: 400 };
+
+export { output, typeOptions };

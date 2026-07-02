@@ -257,6 +257,12 @@ body.fullscreen #crt {
   word-break: break-word;
   text-transform: uppercase;
   animation: textShadow 4s infinite;
+  /* A visible scrollbar breaks the CRT illusion */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.terminal::-webkit-scrollbar {
+  display: none;
 }
 
 .terminal,
@@ -477,6 +483,12 @@ input:checked + .slider:before {
     top: 0;
     width: 100%;
     height: 100%;
+    /* The 80ch minimum would overflow a phone screen */
+    min-width: 0;
+  }
+
+  .terminal {
+    padding: 1.25rem;
   }
 
   #controls {

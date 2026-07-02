@@ -1,26 +1,30 @@
-// Shows details about some of my projects
+// Field operations log
 
 const output = [
   " ",
-  "This is a list of some of my projects: ",
+  "FIELD OPERATIONS LOG // SUBJECT #DJK-2001",
+  "---------------------------------------------",
   " ",
-  "1. CRT-Terminal-Portfolio",
-  "An interactive terminal based concept Portfolio website inspired by Edwin Keijl's Retro CRT terminal screen.",
+  "[OP-01] MELBOURNE ON FOOT",
+  "  Pedestrian traffic intelligence for the Melbourne CBD.",
+  "  Python pipeline, dbt models, Streamlit dashboard.",
   " ",
-  "2. Atmozki's Portfolio",
-  "My Portfolio website.",
+  "[OP-02] PERSONALITY PREDICTOR",
+  "  MBTI personality classifier.",
+  "  Python, scikit-learn, Streamlit.",
   " ",
-  "3. Bspwmrice",
-  "My Custom Bspwm rice config files.",
+  "[OP-03] PORTFOLIO SITE",
+  "  Main portfolio, the modern one.",
+  "  React, Vite, Tailwind. Lives on GitHub Pages.",
   " ",
-  "4. Personality-Predictor",
-  "A MBTI Personality Predictor using streamlit and python.",
+  "[OP-04] CRT TERMINAL (THIS UNIT)",
+  "  The machine you are talking to right now.",
+  "  Vanilla HTML, CSS and JavaScript. No frameworks.",
   " ",
-  "5. ai-chatbot",
-  "Simple Ai chatbot using ChatGPT-API.",
-  " ",
-  "And many more... Find them on my Github profile... ",
+  "FULL ARCHIVE: github.com/atmozki",
   " ",
 ];
 
-export { output };
+const typeOptions = { wait: 8, lineWait: 80, initialWait: 400 };
+
+export { output, typeOptions };

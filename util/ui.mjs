@@ -2,7 +2,17 @@ import { on, off } from "./power.js";
 import { click } from "../sound/index.js";
 import { toggleFullscreen } from "./screens.js";
 
+// Ignore repeat toggles while the monitor is still powering on/off,
+// otherwise a double click starts two boot sequences at once
+let powering = false;
+
 function togglePower() {
+	if (powering) return;
+	powering = true;
+	setTimeout(() => {
+		powering = false;
+	}, 500);
+
 	let isOff = document
 		.getElementById("monitor")
 		.classList.contains("off");
@@ -73,10 +83,11 @@ function registerHandlers() {
 	);
 
 	// Other UI
-	document.getElementById("fullscreen").addEventListener(
-		"click",
-		fullscreen
-	);
+	// The fullscreen button is not present in every layout, F11 still works
+	let fullscreenButton = document.getElementById("fullscreen");
+	if (fullscreenButton) {
+		fullscreenButton.addEventListener("click", fullscreen);
+	}
 	document.getElementById("crt").addEventListener("click", handleClick);
 }
 
