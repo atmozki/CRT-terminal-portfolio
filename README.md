@@ -16,7 +16,7 @@ Built with vanilla HTML, CSS and JavaScript. No frameworks, no build step.
 
 ## How to use
 
-- Visit the [live site](https://atmozki.github.io/CRT-terminal-portfolio/)
+- Visit the [live site](https://atmozki.com)
 - Flip the power switch and let it boot (any key skips the intro)
 - Type `help` to see what you can query
 
