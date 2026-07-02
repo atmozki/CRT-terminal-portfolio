@@ -14,6 +14,20 @@ function setFastForward(enabled) {
 	fastForward = enabled;
 }
 
+// Session generation. Bumped when the monitor powers off or (re)boots,
+// so typing and input loops from the previous session notice they are
+// stale and stop, instead of running on top of the new session.
+let session = 0;
+
+function newSession() {
+	session += 1;
+	return session;
+}
+
+function currentSession() {
+	return session;
+}
+
 function getHistory() {
 	let storage = localStorage.getItem("commandHistory");
 	let prev;
@@ -112,7 +126,10 @@ async function type(
 
 	// If text is an array, e.g. type(['foo', 'bar'])
 	if (processChars && Array.isArray(text)) {
-		for (const t of text)
+		const mySession = session;
+		for (const t of text) {
+			// Stop typing lines that belong to a dead session
+			if (mySession !== session) return;
 			await type(
 				t,
 				{
@@ -122,9 +139,11 @@ async function type(
 				},
 				container
 			);
+		}
 		return;
 	}
 
+	const mySession = session;
 	let interval;
 	return new Promise(async (resolve) => {
 		if (interval) {
@@ -153,6 +172,13 @@ async function type(
 			await pause(initialWait / 1000);
 		}
 
+		// The session may have ended while we were waiting
+		if (mySession !== session) {
+			typer.classList.remove("active");
+			resolve();
+			return;
+		}
+
 		let queue = text;
 		if (processChars) {
 			queue = text.split("");
@@ -162,6 +188,13 @@ async function type(
 
 		// Use an interval to repeatedly pop a character from the queue and type it on screen
 		interval = setInterval(async () => {
+			// Stop mid-word when the monitor powers off or reboots
+			if (mySession !== session) {
+				clearInterval(interval);
+				typer.classList.remove("active");
+				resolve();
+				return;
+			}
 			if (queue.length) {
 				let char = queue.shift();
 
@@ -344,6 +377,7 @@ async function input(pw) {
 
 // Processes the user input and executes a command
 async function parse(input) {
+	const mySession = session;
 	input = cleanInput(input);
 
 	if (!input) {
@@ -392,10 +426,21 @@ async function parse(input) {
 		await loadTemplates(`commands/${command}/${name}.html`);
 	});
 
+	// The session may have ended while the module was loading
+	if (mySession !== session) {
+		return;
+	}
+
 	// Show any output if the command exports any
 	// Commands can export typeOptions to control typing speed
 	await type(module.output, module.typeOptions ?? {});
 	await pause();
+
+	// Don't run the command when its session died while the
+	// output was still being typed
+	if (mySession !== session) {
+		return;
+	}
 
 	// Execute the command (default export)
 	await module.default?.(args);
@@ -458,5 +503,7 @@ export {
 	parse,
 	scroll,
 	waitForKey,
-	setFastForward
+	setFastForward,
+	newSession,
+	currentSession
 };

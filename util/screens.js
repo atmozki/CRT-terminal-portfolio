@@ -1,9 +1,19 @@
-import { parse, type, input, setFastForward } from "./io.js";
+import {
+	parse,
+	type,
+	input,
+	setFastForward,
+	newSession,
+	currentSession
+} from "./io.js";
 import pause from "./pause.js";
 import alert from "./alert.js";
 
 /** Boot screen */
 async function boot() {
+	// Leftovers of the previous session (interrupted typing, an
+	// abandoned input loop) stop as soon as this bumps
+	const mySession = newSession();
 	clear();
 
 	// Any key or click fast-forwards the boot sequence
@@ -59,6 +69,9 @@ async function boot() {
 	document.removeEventListener("click", skip);
 	setFastForward(false);
 
+	// Powered off during the boot sequence
+	if (mySession !== currentSession()) return;
+
 	await alert("SUBJECT FILE OPEN");
 	clear();
 	return intro();
@@ -66,6 +79,8 @@ async function boot() {
 
 /** Subject file header, shown after boot */
 async function intro() {
+	const mySession = currentSession();
+
 	await type(
 		[
 			"=============================================",
@@ -81,17 +96,27 @@ async function intro() {
 		{ wait: 10, initialWait: 400, lineWait: 120 }
 	);
 
+	if (mySession !== currentSession()) return;
+
 	return main();
 }
 
 /** Main input terminal, recursively calls itself */
 async function main() {
+	const mySession = currentSession();
+
 	let command = await input();
 	try {
 		await parse(command);
 	} catch (e) {
-		if (e.message) await type(e.message);
+		if (e.message && mySession === currentSession()) {
+			await type(e.message);
+		}
 	}
+
+	// This loop belongs to a session that was powered off,
+	// the new session runs its own loop
+	if (mySession !== currentSession()) return;
 
 	main();
 }
