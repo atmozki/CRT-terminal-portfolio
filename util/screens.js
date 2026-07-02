@@ -45,9 +45,15 @@ async function boot() {
 		{ wait: 20, lineWait: 450 }
 	);
 
+	// Each boot phase gets its own clean screen, so the text
+	// never piles up into a wall
+	await pause(0.7);
+	if (mySession !== currentSession()) return;
+	clear();
+
 	await type(
-		["> SET TERMINAL/LOGON", "OPERATOR AUTHENTICATION REQUIRED"],
-		{ wait: 20, lineWait: 400 }
+		["> SET TERMINAL/LOGON", "OPERATOR AUTHENTICATION REQUIRED", " "],
+		{ wait: 20, initialWait: 300, lineWait: 400 }
 	);
 
 	// The system types the guest credentials in by itself
@@ -64,13 +70,17 @@ async function boot() {
 
 	await type(
 		[
+			" ",
 			"VALIDATING..........",
 			"CLEARANCE: LEVEL 1 // GUEST ANALYST",
-			"ACCESS GRANTED.",
-			" "
+			"ACCESS GRANTED."
 		],
 		{ wait: 20, initialWait: 300, lineWait: 400 }
 	);
+
+	await pause(0.7);
+	if (mySession !== currentSession()) return;
+	clear();
 
 	await type(
 		[
@@ -79,7 +89,7 @@ async function boot() {
 			"1 MATCH FOUND: SUBJECT FILE #DJK-2001",
 			"DECRYPTING"
 		],
-		{ wait: 20, lineWait: 450 }
+		{ wait: 20, initialWait: 300, lineWait: 450 }
 	);
 
 	await type([".", ".", "."], { lineWait: 200 });
